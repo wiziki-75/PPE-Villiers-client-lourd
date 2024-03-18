@@ -47,7 +47,7 @@ public class PanelProfil extends PanelPrincipal implements ActionListener
 				+ "\n\n Role   user : "+this.unUser.getRole()
 				+ "\n\n ____________________________"); 
 		this.add(this.txtInfos);
-		this.txtInfos.setBackground(Color.gray); 
+		this.txtInfos.setBackground(Color.white); 
 		
 		//placement du bouton modifier 
 		this.btModifier.setBounds(60, 305, 200, 40);

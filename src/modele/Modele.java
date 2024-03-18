@@ -76,13 +76,60 @@ public class Modele {
 	}
 
 	public static ArrayList<Evenement> selectAllEvenement(String filtre) {
-		// TODO Auto-generated method stub
-		return null;
+		String requete = "";
+		if(filtre.equals("")) {
+			requete = "SELECT * FROM evenement";
+		} else {
+			requete = "SELECT * FROM evenement WHERE nom LIKE '%"
+					+ filtre + "%' OR type LIKE '%" + filtre + "%';";
+		}
+		
+		ArrayList<Evenement> lesEvenements = new ArrayList<Evenement>();
+		try {
+			uneBDD.seConnecter();
+			Statement unStat = uneBDD.getMaConnexion().createStatement();
+			ResultSet desRes = unStat.executeQuery(requete); 
+			while (desRes.next()) {
+				Evenement unEvenement = new Evenement (
+						desRes.getInt("idEvenement"), desRes.getInt("organisateurId"), 
+						desRes.getInt("lieuId"), desRes.getString("nom"),
+						desRes.getString("description"), desRes.getString("type"),
+						desRes.getString("statut"), desRes.getDate("date")
+						);
+				lesEvenements.add(unEvenement);
+			}
+			unStat.close();
+			uneBDD.seDeConnecter();	
+			
+		} catch (SQLException exp) {
+			System.out.println("Erreur de requete : " + requete );
+		}
+		
+		return lesEvenements;
 	}
 
 	public static Evenement selectWhereEvenement(String nom) {
-		// TODO Auto-generated method stub
-		return null;
+		Evenement unEvenement = null;
+		String requete = "SELECT * FROM evenement WHERE nom = '" + nom + "';";
+		try {
+			uneBDD.seConnecter();
+			Statement unStat = uneBDD.getMaConnexion().createStatement();
+			ResultSet desRes = unStat.executeQuery(requete); 
+			if (desRes.next()) {
+				unEvenement = new Evenement (
+						desRes.getInt("idEvenement"), desRes.getInt("organisateurId"), 
+						desRes.getInt("lieuId"), desRes.getString("nom"),
+						desRes.getString("description"), desRes.getString("type"),
+						desRes.getString("statut"), desRes.getDate("date")
+						);
+			}
+			unStat.close();
+			uneBDD.seDeConnecter();	
+		} catch (SQLException exp) {
+			System.out.println("Erreur de requete : " + requete );
+			System.out.println(exp);
+		}
+		return unEvenement;
 	}
 
 	public static void insertEvenement(Evenement unEvenement) {
@@ -96,22 +143,96 @@ public class Modele {
 	}
 
 	public static ArrayList<Lieu> selectAllLieu(String filtre) {
-		// TODO Auto-generated method stub
-		return null;
+	    String requete = ""; 
+	    if (filtre.equals("")) {
+	        requete = "select * from lieu;"; // Assurez-vous que votre syntaxe SQL est correcte
+	    } else {
+	        requete = "select * from lieu where nom like '%" + filtre + "%' or adresse like '%" + filtre 
+	                + "%' or capacite like '%" + filtre + "%' or disponibilite like '%" + filtre + "%';"; 
+	    }
+	    
+	    ArrayList<Lieu> lesLieux = new ArrayList<Lieu>(); 
+	    try {
+	        uneBDD.seConnecter();
+	        Statement unStat = uneBDD.getMaConnexion().createStatement();
+	        ResultSet desRes = unStat.executeQuery(requete); 
+	        while (desRes.next()) {
+	            Lieu unLieu = new Lieu(
+	                    desRes.getInt("idLieu"), desRes.getString("nom"), 
+	                    desRes.getString("adresse"), desRes.getString("capacite"),
+	                    desRes.getString("disponibilite")
+	                    );
+	            lesLieux.add(unLieu);
+	        }
+	        unStat.close();
+	        uneBDD.seDeConnecter();
+	    }
+	    catch (SQLException exp) {
+	        System.out.println("Erreur de requete : " + requete);
+	    }   
+	    return lesLieux;
 	}
 
-	public static Lieu selectWhereLieu(String nom) {
-		// TODO Auto-generated method stub
-		return null;
+
+	public static Lieu selectWhereLieu(String nom, String adresse, String capacite, String disponibilite) {
+		Lieu unLieu = null;
+		String requete = "SELECT * FROM lieu WHERE nom = '" + nom
+				+ "' AND adresse = '" + adresse 
+				+ "' AND capacite = '" + capacite
+				+ "' AND disponibilite = '" + disponibilite + "';";
+		try {
+			uneBDD.seConnecter();
+			Statement unStat = uneBDD.getMaConnexion().createStatement();
+			ResultSet desRes = unStat.executeQuery(requete);
+			if(desRes.next()) {
+				unLieu = new Lieu (
+					desRes.getInt("idLieu"), desRes.getString("nom"),
+					desRes.getString("adresse"), desRes.getString("capacite"),
+					desRes.getString("disponibilite")
+				);
+			}
+		} catch (SQLException exp) {
+			System.out.println("Erreur de requete : " + requete );
+			System.out.println(exp);
+		}
+		
+		return unLieu;
 	}
 
 	public static void insertLieu(Lieu unLieu) {
-		// TODO Auto-generated method stub
-		
+		String requete = "INSERT INTO lieu VALUES(NULL, '"
+				+ unLieu.getNom() + "', '"
+				+ unLieu.getAdresse() + "', '"
+				+ unLieu.getCapacite() + "', '"
+				+ unLieu.getDisponibilite() + "');";
+		try {
+			uneBDD.seConnecter();
+			Statement unStat = uneBDD.getMaConnexion().createStatement();
+			unStat.execute(requete);
+			unStat.close();
+			uneBDD.seDeConnecter();
+		} catch (SQLException exp) {
+			System.out.println("Erreur de requete : " + requete);
+			System.out.println(exp);
+		}
 	}
 
 	public static void updateLieu(Lieu unLieu) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public static void deleteLieu(int idLieu) {
+		String requete = "DELETE FROM lieu WHERE idLieu = " + idLieu + ";";
+		try {
+			uneBDD.seConnecter();
+			Statement unStat = uneBDD.getMaConnexion().createStatement(); 
+			unStat.execute(requete);
+			unStat.close();
+			uneBDD.seDeConnecter();	
+		} catch (SQLException exp)
+			{
+				System.out.println("Erreur de requete : " + requete );
+			}
 	}
 }

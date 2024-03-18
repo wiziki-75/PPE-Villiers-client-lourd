@@ -6,8 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-//import org.mindrot.jbcrypt.BCrypt;
-
 
 import javax.swing.*;
 
@@ -19,7 +17,7 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener 
 
 	private JPanel panelForm = new JPanel (); 
 	private JTextField txtEmail = new JTextField("anthony.guerrand92@gmail.com"); 
-	private JPasswordField txtMdp = new JPasswordField("$2y$10$VZ47sew1dcxwQ7cU2j.hsehMFM16846kMxKBDCEr3Y7eNqPNj.nkS"); 
+	private JPasswordField txtMdp = new JPasswordField("root"); 
 	private JButton btAnnuler = new JButton("Annuler"); 
 	private JButton btSeConnecter = new JButton("Se Connecter");
 	
@@ -68,9 +66,6 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener 
 		 String email = this.txtEmail.getText(); 
 		 String mdp = new String (this.txtMdp.getPassword()); 
 		 
-		 //on vérifie la sécurité des données 
-		 
-		 //on vérifie dans la base de données 
 		 User unUser = Controleur.selectWhereUser(email, mdp); 
 		 if (unUser == null) {
 			 JOptionPane.showMessageDialog(this,

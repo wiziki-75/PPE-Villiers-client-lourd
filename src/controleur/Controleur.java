@@ -55,8 +55,8 @@ public class Controleur {
 		return Modele.selectAllLieu(filtre);
 	}
 	
-	public static Lieu selectWhereLieu(String nom) {
-		return Modele.selectWhereLieu(nom);
+	public static Lieu selectWhereLieu(String nom, String adresse, String capacite, String disponiblite) {
+		return Modele.selectWhereLieu(nom, adresse, capacite, disponiblite);
 	}
 	
 	public static void insertLieu(Lieu unLieu) {
@@ -65,6 +65,10 @@ public class Controleur {
 	
 	public static void updateLieu(Lieu unLieu) {
 		Modele.updateLieu(unLieu);
+	}
+	
+	public static void deleteLieu(int idLieu) {
+		Modele.deleteLieu(idLieu);
 	}
 
 
