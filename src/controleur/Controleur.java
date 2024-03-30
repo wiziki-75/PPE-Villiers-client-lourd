@@ -49,6 +49,10 @@ public class Controleur {
 		Modele.updateEvenement(unEvenement);
 	}
 	
+	public static void deleteEvenement(int idEvenement) {
+		Modele.deleteEvenement(idEvenement);
+	}
+	
 	// Lieu
 	
 	public static ArrayList<Lieu> selectAllLieu(String filtre) {

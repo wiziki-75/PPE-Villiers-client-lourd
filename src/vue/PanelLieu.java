@@ -74,7 +74,7 @@ public class PanelLieu extends PanelPrincipal implements ActionListener{
 		this.add(this.panelFiltre);
 		
 		//construction de la table 
-		String entetes [] = {"ID Lieu", "Nom","Adresse", "Disponibilité"};
+		String entetes [] = {"ID Lieu", "Nom","Adresse", "Capacité", "Disponibilité"};
 		this.unTableau= new Tableau (this.obtenirDonnees(""), entetes);
 		this.tableLieux = new JTable(this.unTableau) ; 
 		this.uneScroll = new JScrollPane(this.tableLieux);

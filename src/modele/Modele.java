@@ -91,10 +91,11 @@ public class Modele {
 			ResultSet desRes = unStat.executeQuery(requete); 
 			while (desRes.next()) {
 				Evenement unEvenement = new Evenement (
-						desRes.getInt("idEvenement"), desRes.getInt("organisateurId"), 
-						desRes.getInt("lieuId"), desRes.getString("nom"),
+						desRes.getInt("idEvenement"), 
+						//desRes.getInt("organisateurId"), desRes.getInt("lieuId"), 
+						desRes.getString("nom"),
 						desRes.getString("description"), desRes.getString("type"),
-						desRes.getString("statut"), desRes.getDate("date")
+						desRes.getString("statut"), desRes.getString("date")
 						);
 				lesEvenements.add(unEvenement);
 			}
@@ -117,10 +118,11 @@ public class Modele {
 			ResultSet desRes = unStat.executeQuery(requete); 
 			if (desRes.next()) {
 				unEvenement = new Evenement (
-						desRes.getInt("idEvenement"), desRes.getInt("organisateurId"), 
-						desRes.getInt("lieuId"), desRes.getString("nom"),
+						desRes.getInt("idEvenement"), 
+						//desRes.getInt("organisateurId"), desRes.getInt("lieuId"), 
+						desRes.getString("nom"),
 						desRes.getString("description"), desRes.getString("type"),
-						desRes.getString("statut"), desRes.getDate("date")
+						desRes.getString("statut"), desRes.getString("date")
 						);
 			}
 			unStat.close();
@@ -139,6 +141,10 @@ public class Modele {
 
 	public static void updateEvenement(Evenement unEvenement) {
 		// TODO Auto-generated method stub
+		
+	}
+	
+	public static void deleteEvenement(int idEvenement) {
 		
 	}
 

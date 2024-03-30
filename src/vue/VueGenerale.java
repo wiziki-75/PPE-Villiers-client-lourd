@@ -20,7 +20,7 @@ public class VueGenerale extends JFrame implements ActionListener{
 	
 	private PanelProfil unPanelProfil;
 	//private PanelUser unPanelUser = new PanelUser();
-	//private PanelEvenement unPanelEvenement = new PanelEvenement();
+	private PanelEvenement unPanelEvenement = new PanelEvenement();
 	private PanelLieu unPanelLieu = new PanelLieu();
 	
 	public VueGenerale(User unUser) {
@@ -54,7 +54,7 @@ public class VueGenerale extends JFrame implements ActionListener{
 		//ajout les panels dans la vue 
 		this.add(this.unPanelProfil);
 		//this.add(this.unPanelUser);
-		//this.add(this.unPanelEvenement);
+		this.add(this.unPanelEvenement);
 		this.add(this.unPanelLieu);
 		
 		this.setVisible(true);
@@ -63,13 +63,13 @@ public class VueGenerale extends JFrame implements ActionListener{
 	public void afficherPanel (int choix) {
 		this.unPanelProfil.setVisible(false);
 		//this.unPanelUser.setVisible(false);
-		//this.unPanelEvenement.setVisible(false);
+		this.unPanelEvenement.setVisible(false);
 		this.unPanelLieu.setVisible(false);
 		
 		switch(choix) {
 		case 1 : this.unPanelProfil.setVisible(true);break;
 		//case 2 : this.unPanelUser.setVisible(true);break;
-		//case 3 : this.unPanelEvenement.setVisible(true);break;
+		case 3 : this.unPanelEvenement.setVisible(true);break;
 		case 4 : this.unPanelLieu.setVisible(true);break;
 		}
 		
