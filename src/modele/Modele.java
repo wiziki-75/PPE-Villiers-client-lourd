@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import com.mysql.jdbc.PreparedStatement;
+
 import controleur.Evenement;
 import controleur.Lieu;
 import controleur.User;
@@ -92,7 +94,8 @@ public class Modele {
 			while (desRes.next()) {
 				Evenement unEvenement = new Evenement (
 						desRes.getInt("idEvenement"), 
-						//desRes.getInt("organisateurId"), desRes.getInt("lieuId"), 
+						desRes.getInt("organisateurId"), 
+						desRes.getInt("lieuId"), 
 						desRes.getString("nom"),
 						desRes.getString("description"), desRes.getString("type"),
 						desRes.getString("statut"), desRes.getString("date")
@@ -119,7 +122,8 @@ public class Modele {
 			if (desRes.next()) {
 				unEvenement = new Evenement (
 						desRes.getInt("idEvenement"), 
-						//desRes.getInt("organisateurId"), desRes.getInt("lieuId"), 
+						desRes.getInt("organisateurId"), 
+						desRes.getInt("lieuId"), 
 						desRes.getString("nom"),
 						desRes.getString("description"), desRes.getString("type"),
 						desRes.getString("statut"), desRes.getString("date")
@@ -241,4 +245,141 @@ public class Modele {
 				System.out.println("Erreur de requete : " + requete );
 			}
 	}
+	
+	
+	
+	
+	//SELECT CUSTOM
+	
+    public static String selectUserNameById(int idUtilisateur) {
+        String nomUtilisateur = null; // Initialisation à null au cas où l'utilisateur n'est pas trouvé
+        String requete = "SELECT nom FROM user WHERE idUtilisateur = ?;"; // Utilisation d'un paramètre
+
+        try {
+            uneBDD.seConnecter();
+            // Utilisation de PreparedStatement au lieu de Statement pour sécuriser la requête
+            PreparedStatement unPStat = (PreparedStatement) uneBDD.getMaConnexion().prepareStatement(requete);
+            unPStat.setInt(1, idUtilisateur); // Assignation de la valeur au paramètre de la requête
+            ResultSet unResultat = unPStat.executeQuery();
+            if (unResultat.next()) {
+                nomUtilisateur = unResultat.getString("nom"); // Récupération du nom de l'utilisateur
+            }
+            unPStat.close();
+            uneBDD.seDeConnecter();
+        } catch (SQLException exp) {
+            System.out.println("Erreur de requête : " + requete);
+            exp.printStackTrace();
+        }
+        return nomUtilisateur; // Retourne le nom de l'utilisateur ou null
+    }
+    
+    public static String selectLieuNameById(int idLieu) {
+        String nomLieu = null; // Initialisation à null au cas où le lieu n'est pas trouvé
+        String requete = "SELECT nom FROM lieu WHERE idLieu = ?;"; // Utilisation d'un paramètre
+
+        try {
+            uneBDD.seConnecter();
+            // Utilisation de PreparedStatement au lieu de Statement pour sécuriser la requête
+            PreparedStatement unPStat = (PreparedStatement) uneBDD.getMaConnexion().prepareStatement(requete);
+            unPStat.setInt(1, idLieu); // Assignation de la valeur au paramètre de la requête
+            ResultSet unResultat = unPStat.executeQuery();
+            if (unResultat.next()) {
+                nomLieu = unResultat.getString("nom"); // Récupération du nom du lieu
+            }
+            unPStat.close();
+            uneBDD.seDeConnecter();
+        } catch (SQLException exp) {
+            System.out.println("Erreur de requête : " + requete);
+            exp.printStackTrace();
+        }
+        return nomLieu; // Retourne le nom du lieu ou null
+    }
+    
+    public static ArrayList<String> selectOrganisateurs() {
+        ArrayList<String> organisateurs = new ArrayList<>();
+        String requete = "SELECT nom FROM User WHERE role = 'organisateur';";
+        try {
+            uneBDD.seConnecter();
+            PreparedStatement unPStat = (PreparedStatement) uneBDD.getMaConnexion().prepareStatement(requete);
+            ResultSet unResultat = unPStat.executeQuery();
+            while (unResultat.next()) {
+                String nom = unResultat.getString("nom");
+                organisateurs.add(nom);
+            }
+            unPStat.close();
+            uneBDD.seDeConnecter();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return organisateurs;
+    }
+    
+    public static ArrayList<String> selectLieuxDispo() {
+        ArrayList<String> lieux = new ArrayList<>();
+        String requete = "SELECT nom FROM Lieu WHERE disponibilite = 'disponible';";
+        try {
+            uneBDD.seConnecter();
+            PreparedStatement unPStat = (PreparedStatement) uneBDD.getMaConnexion().prepareStatement(requete);
+            ResultSet unResultat = unPStat.executeQuery();
+            while (unResultat.next()) {
+                String nom = unResultat.getString("nom");
+                lieux.add(nom);
+            }
+            unPStat.close();
+            uneBDD.seDeConnecter();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lieux;
+    }
+    
+    public static Integer selectOrganisateurIdByNom(String nom) {
+        Integer idOrganisateur = null; // Initialisation à null au cas où l'organisateur n'est pas trouvé
+        String requete = "SELECT idOrganisateur FROM organisateur WHERE nom = ?;"; // Utilisation d'un paramètre
+
+        try {
+            uneBDD.seConnecter();
+            // Utilisation de PreparedStatement au lieu de Statement pour sécuriser la requête
+            PreparedStatement unPStat = (PreparedStatement) uneBDD.getMaConnexion().prepareStatement(requete);
+            unPStat.setString(1, nom); // Assignation de la valeur au paramètre de la requête
+            ResultSet unResultat = unPStat.executeQuery();
+            if (unResultat.next()) {
+                idOrganisateur = unResultat.getInt("idOrganisateur"); // Récupération de l'ID de l'organisateur
+            }
+            unResultat.close();
+            unPStat.close();
+            uneBDD.seDeConnecter();
+        } catch (SQLException exp) {
+            System.out.println("Erreur de requête : " + requete);
+            exp.printStackTrace();
+        }
+        return idOrganisateur; // Retourne l'ID de l'organisateur ou null
+    }
+
+    public static Integer selectLieuIdByNom(String nom) {
+    	Integer idLieu = null;
+        String requete = "SELECT idLieu FROM lieu WHERE nom = ?;";
+        try {
+            uneBDD.seConnecter();
+            // Auto-closeable try-with-resources for PreparedStatement and ResultSet
+            try (PreparedStatement unPStat = (PreparedStatement) uneBDD.getMaConnexion().prepareStatement(requete)) {
+                unPStat.setString(1, nom); // Assignation de la valeur au paramètre de la requête
+                try (ResultSet unResultat = unPStat.executeQuery()) {
+                    if (unResultat.next()) {
+                    	idLieu = unResultat.getInt("idLieu");
+                    	return idLieu;// Récupération de l'ID du lieu
+                    }
+                }
+            } finally {
+                uneBDD.seDeConnecter();
+            }
+        } catch (SQLException exp) {
+            System.out.println("Erreur de requête : " + requete);
+            exp.printStackTrace();
+        }
+        return null; // Retourne null si le lieu n'est pas trouvé
+    }
+
+
+
 }

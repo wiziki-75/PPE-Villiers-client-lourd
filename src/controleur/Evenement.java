@@ -6,7 +6,7 @@ public class Evenement {
 	private int idEvenement, organisateurId, lieuId;
 	private String nom, description, type, statut;
 	private String date;
-	/*public Evenement(int idEvenement, int organisateurId, int lieuId, String nom, String description, String type,String statut, String date) {
+	public Evenement(int idEvenement, int organisateurId, int lieuId, String nom, String description, String type,String statut, String date) {
 		super();
 		this.idEvenement = idEvenement;
 		this.organisateurId = organisateurId;
@@ -16,23 +16,13 @@ public class Evenement {
 		this.type = type;
 		this.statut = statut;
 		this.date = date;
-	}*/
-	
-	public Evenement(int idEvenement, String nom, String description, String type,String statut, String date) {
-		super();
-		this.idEvenement = idEvenement;
-		this.nom = nom;
-		this.description = description;
-		this.type = type;
-		this.statut = statut;
-		this.date = date;
 	}
 	
-	public Evenement(String nom, String description, String type,String statut, String date) {
+	public Evenement(int organisateurId, int lieuId, String nom, String description, String type,String statut, String date) {
 		super();
 		this.idEvenement = 0;
-		//this.organisateurId = 0;
-		//this.lieuId = 0;
+		this.organisateurId = organisateurId;
+		this.lieuId = lieuId;
 		this.nom = nom;
 		this.description = description;
 		this.type = type;

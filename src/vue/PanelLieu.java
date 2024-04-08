@@ -25,8 +25,7 @@ public class PanelLieu extends PanelPrincipal implements ActionListener{
 	private JTextField txtNom = new  JTextField(); 
 	private JTextField txtAdresse = new  JTextField(); 
 	private JTextField txtCapacite = new  JTextField(); 
-	private JComboBox<String> cbxDispo = new JComboBox<>(new String[]{"disponible", "réservé", "indisponible"});
-; 
+	private JComboBox<String> cbxDispo = new JComboBox<>(new String[]{"disponible", "réservé", "indisponible"}); 
 	
 	private JButton btAnnuler = new JButton("Annuler"); 
 	private JButton btEnregistrer = new JButton("Enregistrer");

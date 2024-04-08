@@ -74,6 +74,29 @@ public class Controleur {
 	public static void deleteLieu(int idLieu) {
 		Modele.deleteLieu(idLieu);
 	}
-
+	
+	public static String selectUserNameById(int idUtilisateur) {
+		return Modele.selectUserNameById(idUtilisateur);
+	}
+	
+	public static String selectLieuNameById(int idLieu) {
+		return Modele.selectLieuNameById(idLieu);
+	}
+	
+	public static ArrayList<String> selectOrganisateurs() {
+		return Modele.selectOrganisateurs();
+	}
+	
+	public static ArrayList<String> selectLieuxDispo() {
+		return Modele.selectLieuxDispo();
+	}
+	
+	public static Integer selectOrganisateurIdByNom(String nom) {
+		return Modele.selectOrganisateurIdByNom(nom);
+	}
+	
+	public static Integer selectLieuIdByNom(String nom) {
+		return Modele.selectLieuIdByNom(nom);
+	}
 
 }

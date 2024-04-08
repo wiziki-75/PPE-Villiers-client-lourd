@@ -30,6 +30,21 @@ public class PanelEvenement extends PanelPrincipal implements ActionListener{
 	private JComboBox<String> cbxOrganisateur = new JComboBox<>();
 	private JComboBox<String> cbxLieu = new JComboBox<>();
 	
+	public void remplirCbxOrganisateur() {
+	    ArrayList<String> organisateurs = Controleur.selectOrganisateurs();
+	    for (String nom : organisateurs) {
+	        cbxOrganisateur.addItem(nom);
+	    }
+	}
+	
+	public void selectLieuxDispo() {
+	    ArrayList<String> lieux = Controleur.selectLieuxDispo();
+	    for (String nom : lieux) {
+	        cbxLieu.addItem(nom);
+	    }
+	}
+
+	
 	private JButton btAnnuler = new JButton("Annuler"); 
 	private JButton btEnregistrer = new JButton("Enregistrer");
 	
@@ -48,6 +63,9 @@ public class PanelEvenement extends PanelPrincipal implements ActionListener{
 	
 	public PanelEvenement() {
 		super("Gestion des évènements");
+		
+		remplirCbxOrganisateur();
+		selectLieuxDispo();
 		
 		//construire le panel formulaire : saisie de la classe. 
 		this.panelForm.setBounds(20, 90, 250, 250);
@@ -151,8 +169,8 @@ public class PanelEvenement extends PanelPrincipal implements ActionListener{
 	        matrice [i][2] = unEvenement.getDate();
 	        matrice [i][3] = unEvenement.getType(); 
 	        matrice [i][4] = unEvenement.getStatut(); 
-	        //matrice [i][5] = unEvenement.getOrganisateurId(); 
-	        //matrice [i][6] = unEvenement.getLieuId(); 
+	        matrice [i][5] = Controleur.selectUserNameById(unEvenement.getOrganisateurId()); 
+	        matrice [i][6] = Controleur.selectLieuNameById(unEvenement.getLieuId()); 
 	        i++;
 	    }
 	    return matrice; 
@@ -177,7 +195,10 @@ public class PanelEvenement extends PanelPrincipal implements ActionListener{
 			String organisateur = (String) this.cbxOrganisateur.getSelectedItem();
 			String lieu = (String) this.cbxLieu.getSelectedItem();
 			
-			Evenement unEvenement = new Evenement(nom, description, type, status, date);
+			int organisateurId = Controleur.selectOrganisateurIdByNom(organisateur);
+			int lieuId = Controleur.selectLieuIdByNom(lieu);
+			
+			Evenement unEvenement = new Evenement(organisateurId, lieuId, nom, description, type, status, date);
 			
 			Controleur.insertEvenement(unEvenement);
 			
