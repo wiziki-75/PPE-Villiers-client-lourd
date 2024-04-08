@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : lun. 08 avr. 2024 à 16:16
+-- Généré le : lun. 08 avr. 2024 à 20:47
 -- Version du serveur : 10.4.32-MariaDB
--- Version de PHP : 8.0.30
+-- Version de PHP : 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -44,9 +44,10 @@ CREATE TABLE `evenement` (
 
 INSERT INTO `evenement` (`idEvenement`, `nom`, `description`, `date`, `type`, `statut`, `organisateurId`, `lieuId`) VALUES
 (10, 'Festival musique', 'test', '2024-03-02 10:00:00', 'Concert', 'annulé', 11, 5),
-(11, 'Meeting aérien', 'Pour illustrer la différence entre une procédure stockée et une fonction stockée, prenons un exemple simple basé sur une base de données fictive qui stocke des informations sur des employés. Nous allons créer une procédure stockée pour insérer un nouvel employé dans la base de données et une fonction stockée pour calculer l\'âge d\'un employé à partir de sa date de naissance.', '2024-03-15 13:00:00', 'Communautaire', 'confirmé', 28, 3),
 (18, 'La route de la soif', 'alcool', '2024-03-07 02:14:00', 'Communautaire', 'confirmé', 11, 6),
-(20, 'Combat doumbe', 'ufc', '2024-03-20 02:29:00', 'Educatif', 'en_attente', 11, 7);
+(21, 'test', 'test', '2024-03-02 10:00:00', 'Concert', 'en_attente', 11, 4),
+(22, 'test3', 'test3', '2023-03-03 00:00:00', 'Concert', 'en_attente', 11, 7),
+(23, 'test4', 'test4', '2023-03-03 00:00:00', 'Concert', 'en_attente', 49, 7);
 
 --
 -- Déclencheurs `evenement`
@@ -99,11 +100,15 @@ CREATE TABLE `lieu` (
 --
 
 INSERT INTO `lieu` (`idLieu`, `nom`, `adresse`, `capacite`, `disponibilite`) VALUES
-(3, 'Lieu 3', '789 Boulevard du Parc', '200', 'réservé'),
-(4, 'Lieu 4', '101 Rue de la Gare', '150', 'disponible'),
+(3, 'Lieu 3', '789 Boulevard du Parc', '200', 'disponible'),
+(4, 'Lieu 4', '101 Rue de la Gare', '150', 'réservé'),
 (5, 'Lieu 5', '202 Avenue de la République', '400', 'réservé'),
 (6, 'Lieu 69', '69 rue', '40', 'réservé'),
-(7, 'Parc des grands', 'Boulevard 69', '300', 'réservé');
+(7, 'Parc des grands', 'Boulevard 69', '300', 'réservé'),
+(28, 'test2', 'test2', '50', 'disponible'),
+(29, 'test2', 'test2', '50', 'disponible'),
+(30, 'test3', 'test3', 'test3', 'indisponible'),
+(31, 'test3', 'test3', 'test3', 'indisponible');
 
 -- --------------------------------------------------------
 
@@ -125,7 +130,7 @@ CREATE TABLE `organisateur` (
 INSERT INTO `organisateur` (`idOrganisateur`, `nom`, `prenom`, `service`) VALUES
 (11, 'Guerrand', 'Anthony', NULL),
 (28, 'Yolo', 'Jean', NULL),
-(33, 'Toma', 'Yoch', NULL);
+(49, 'test9', 'test9', NULL);
 
 -- --------------------------------------------------------
 
@@ -148,9 +153,10 @@ INSERT INTO `participant` (`idParticipant`, `dateinscription`, `nbEnfants`) VALU
 (11, '2024-01-22 00:00:00', NULL),
 (15, '2024-01-25 00:00:00', NULL),
 (29, '2024-03-01 00:00:00', NULL),
-(30, '2024-03-01 00:00:00', NULL),
 (31, '2024-03-14 00:00:00', NULL),
-(32, '2024-03-15 00:00:00', NULL);
+(47, '2024-04-08 00:00:00', NULL),
+(48, '2024-04-08 00:00:00', NULL),
+(50, '2024-04-08 00:00:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -171,11 +177,7 @@ CREATE TABLE `participation` (
 --
 
 INSERT INTO `participation` (`idParticipation`, `idParticipant`, `dateinscription`, `nbenfants`, `idEvenement`) VALUES
-(39, 28, '2024-03-01 09:40:47', 0, 11),
-(42, 30, '2024-03-01 09:47:57', 0, 11),
 (48, 11, '2024-03-06 23:28:49', 0, 18),
-(50, 31, '2024-03-14 08:53:50', 0, 11),
-(53, 11, '2024-03-28 16:22:49', 0, 11),
 (54, 33, '2024-04-04 08:22:07', 0, 18);
 
 --
@@ -224,10 +226,11 @@ INSERT INTO `user` (`idUtilisateur`, `nom`, `prenom`, `courriel`, `motdepasse`, 
 (15, 'lourd', 'zark', 'z@gmail.com', '$2y$10$OzY4JlFJen1G0rNZOLvRgu0KCxzJ4aZRcZYdAd4.g1dLwlfjKFCrm', NULL, 'participant'),
 (28, 'Yolo', 'Jean', 'jy@gmail.com', '$2y$10$mDPJWkc2EIbgTs1zoehAl.qmXr5C8kUWsxakal.ex/F5ZiFukBG2i', NULL, 'organisateur'),
 (29, 'MICHEL', 'LOUIS', 'lm@gmail.com', '$2y$10$vxSdTvbFWgPxvC8T2A80RuNrMuZWIRqhI8fRMSekDbS2/jq82HTby', NULL, 'participant'),
-(30, 'Ulm', 'Jack', 'ju@gmail.com', '$2y$10$Je/Z9uYAl0xra06gULuWq.7.j2RHHKH/.14CmpnsUcTTOwvE8BvAK', 0, 'participant'),
 (31, 'Migro', 'Timoté', 'tm@gmail.com', 'root', 0, 'participant'),
-(32, 'lala', 'lolo', 'lala@gmail.com', 'lala', NULL, 'participant'),
-(33, 'Toma', 'Yoch', 'yt@free.fr', 'root', NULL, 'organisateur');
+(47, 'test7', 'test7', 'test7', 'test7', 0, 'participant'),
+(48, 'test8', 'test8', 'test8', 'test8', 0, 'participant'),
+(49, 'test9', 'test9', 'test9', 'test9', 0, 'organisateur'),
+(50, 'test', 'test', 'test', 'test', 0, 'participant');
 
 --
 -- Déclencheurs `user`
@@ -357,13 +360,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT pour la table `evenement`
 --
 ALTER TABLE `evenement`
-  MODIFY `idEvenement` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `idEvenement` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT pour la table `lieu`
 --
 ALTER TABLE `lieu`
-  MODIFY `idLieu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `idLieu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT pour la table `participation`
@@ -375,7 +378,7 @@ ALTER TABLE `participation`
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `idUtilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `idUtilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- Contraintes pour les tables déchargées
