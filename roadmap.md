@@ -7,6 +7,7 @@
   - Empêcher les insertions côté client
 - Actualiser dynamiquement les panels
 - Empêcher les participants de se connecter
+- Préparer et sécuriser toutes les requêtes SQL
 
 ## Panel Lieux :
 - Obliger l'utilisateur à sélectionner un nombre
