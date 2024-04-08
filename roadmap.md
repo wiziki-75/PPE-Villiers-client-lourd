@@ -1,24 +1,25 @@
-# ROADMAP v0.1.0
+# ROADMAP 0.1.0
+# Version actuel : 0.1.0-beta.1
 
-## General:
-- Manage request errors
-  - Error messages
-  - Prevent client-side insertions
-- Dynamically refresh panels
+## Général :
+- Gérer les erreurs de requêtes
+  - Message d'erreur
+  - Empêcher les insertions côté client
+- Actualiser dynamiquement les panels
+- Empêcher les participants de se connecter
 
-## Panel: Locations
-- Require users to select a number
+## Panel Lieux :
+- Obliger l'utilisateur à sélectionner un nombre
 
-## Panel: Events
-- Add a date picker to the Date field
-- Dynamically add a deleted event back to the location combobox
-- Display a message when no location is available
+## Panel Événements :
+- Dans le champ Date, mettre un sélecteur de date
+- Quand un événement est supprimé, l'ajouter dynamiquement dans le combobox des lieux
+- Afficher un message quand aucun lieu n'est disponible
 
 ## Bugs
 
-### General:
-- Properly refresh the indicated item count when one is deleted
+### Général :
+- Bien actualiser le nombre indiqué d'items quand l'un d'eux est supprimé
 
-### Panel: Location
-- (Minor) If the new location has exactly the same values, then the displayed ID will be the same for both
-
+### Panel Lieu :
+- (Mineur) Si le nouveau lieu possède exactement les mêmes valeurs, alors l'ID affiché sera le même pour les deux
