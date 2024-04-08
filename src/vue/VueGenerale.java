@@ -10,6 +10,7 @@ import javax.swing.*;
 import controleur.Villiers;
 import controleur.User;
 
+@SuppressWarnings("serial")
 public class VueGenerale extends JFrame implements ActionListener{
 	private JPanel panelMenu = new JPanel(); 
 	private JButton btProfil = new JButton("Profil");
@@ -19,14 +20,14 @@ public class VueGenerale extends JFrame implements ActionListener{
 	private JButton btQuitter = new JButton("Quitter");
 	
 	private PanelProfil unPanelProfil;
-	//private PanelUser unPanelUser = new PanelUser();
+	private PanelUser unPanelUser = new PanelUser();
 	private PanelEvenement unPanelEvenement = new PanelEvenement();
 	private PanelLieu unPanelLieu = new PanelLieu();
 	
 	public VueGenerale(User unUser) {
 		unPanelProfil = new PanelProfil(unUser);
 		
-		this.setTitle("Application admin");
+		this.setTitle("Application admin 0.1.0-alpha.1");
 		this.setResizable(false);
 		this.setBounds(100, 100, 900, 600);
 		this.getContentPane().setBackground(Color.white);
@@ -53,7 +54,7 @@ public class VueGenerale extends JFrame implements ActionListener{
 		
 		//ajout les panels dans la vue 
 		this.add(this.unPanelProfil);
-		//this.add(this.unPanelUser);
+		this.add(this.unPanelUser);
 		this.add(this.unPanelEvenement);
 		this.add(this.unPanelLieu);
 		
@@ -62,13 +63,13 @@ public class VueGenerale extends JFrame implements ActionListener{
 	
 	public void afficherPanel (int choix) {
 		this.unPanelProfil.setVisible(false);
-		//this.unPanelUser.setVisible(false);
+		this.unPanelUser.setVisible(false);
 		this.unPanelEvenement.setVisible(false);
 		this.unPanelLieu.setVisible(false);
 		
 		switch(choix) {
 		case 1 : this.unPanelProfil.setVisible(true);break;
-		//case 2 : this.unPanelUser.setVisible(true);break;
+		case 2 : this.unPanelUser.setVisible(true);break;
 		case 3 : this.unPanelEvenement.setVisible(true);break;
 		case 4 : this.unPanelLieu.setVisible(true);break;
 		}

@@ -21,6 +21,7 @@ import controleur.Controleur;
 import controleur.Evenement;
 import controleur.Tableau;
 
+@SuppressWarnings("serial")
 public class PanelEvenement extends PanelPrincipal implements ActionListener{
 	private JTextField txtNom = new  JTextField(); 
 	private JTextField txtDate = new  JTextField();
@@ -175,7 +176,7 @@ public class PanelEvenement extends PanelPrincipal implements ActionListener{
 	    }
 	    return matrice; 
 	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == this.btAnnuler) {
@@ -202,9 +203,9 @@ public class PanelEvenement extends PanelPrincipal implements ActionListener{
 			
 			Controleur.insertEvenement(unEvenement);
 			
-			unEvenement = Controleur.selectWhereEvenement(nom);
+			unEvenement = Controleur.selectWhereEvenement(nom, description, type, status, date);
 			
-			Object ligne[] = {unEvenement.getIdEvenement(), nom, description, type, status, date};
+			Object ligne[] = {unEvenement.getIdEvenement(), nom, date, type, status, organisateur, lieu};
 			 this.unTableau.ajouterLigne(ligne);
 			 this.nb = this.unTableau.getRowCount(); 
 			 this.nbEvenements.setText("Nombre de d'évènements : " + nb);

@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.Image;
+
 
 import javax.swing.*;
 
@@ -13,6 +15,7 @@ import controleur.Controleur;
 import controleur.Villiers;
 import controleur.User;
 
+@SuppressWarnings("serial")
 public class VueConnexion extends JFrame implements ActionListener, KeyListener {
 
 	private JPanel panelForm = new JPanel (); 
@@ -22,12 +25,38 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener 
 	private JButton btSeConnecter = new JButton("Se Connecter");
 	
 	public VueConnexion() {
-		this.setTitle("Application Admin");
+		this.setTitle("Application Admin 0.1.0-alpha.1");
 		this.setResizable(false);
 		this.setBounds(100, 100, 600, 300);
 		this.getContentPane().setBackground(Color.white);
 		this.setLayout(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		// Chargement de l'image
+		ImageIcon uneImage = new ImageIcon("src/images/villiers.png");
+
+		// Obtention de l'image à partir de l'ImageIcon
+		Image image = uneImage.getImage();
+
+		// Redimensionnement de l'image
+		int largeurRedimensionnee = 200; // Largeur souhaitée
+		int hauteurRedimensionnee = 200; // Hauteur souhaitée
+		Image nouvelleImage = image.getScaledInstance(largeurRedimensionnee, hauteurRedimensionnee, Image.SCALE_SMOOTH);
+
+		// Création d'un nouvel ImageIcon avec l'image redimensionnée
+		ImageIcon imageRedimensionnee = new ImageIcon(nouvelleImage);
+
+		// Création du JLabel avec l'image redimensionnée
+		JLabel leLogo = new JLabel(imageRedimensionnee);
+		leLogo.setBounds(20, 20, largeurRedimensionnee, hauteurRedimensionnee);
+
+		// Création d'un JLabel pour le texte "Développé par TechnoSoft"
+		JLabel labelTechnoSoft = new JLabel("Développé par TechnoSoft");
+		labelTechnoSoft.setBounds(20, 230, 150, 20); // Position sous l'image
+
+		// Ajout du JLabel à votre conteneur
+		this.add(leLogo);
+		this.add(labelTechnoSoft);
 		
 		//construction du panel form 
 		this.panelForm.setBounds(300, 70, 240, 150);

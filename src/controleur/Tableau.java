@@ -2,6 +2,7 @@ package controleur;
 
 import javax.swing.table.AbstractTableModel;
 
+@SuppressWarnings("serial")
 public class Tableau extends AbstractTableModel
 {
 	private Object [][] donnees ; //matrice des données 

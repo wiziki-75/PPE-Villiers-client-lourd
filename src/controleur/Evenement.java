@@ -1,7 +1,5 @@
 package controleur;
 
-import java.util.Date;
-
 public class Evenement {
 	private int idEvenement, organisateurId, lieuId;
 	private String nom, description, type, statut;

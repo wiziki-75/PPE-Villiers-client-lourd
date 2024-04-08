@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import controleur.Controleur;
 import controleur.User;
 
+@SuppressWarnings("serial")
 public class PanelProfil extends PanelPrincipal implements ActionListener
 {
 	

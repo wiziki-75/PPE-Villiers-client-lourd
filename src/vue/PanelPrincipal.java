@@ -5,6 +5,7 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class PanelPrincipal extends JPanel
 {
 	private JLabel lbTitre = new JLabel();

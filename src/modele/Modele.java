@@ -13,6 +13,11 @@ import controleur.User;
 
 public class Modele {
 	private static BDD uneBDD = new BDD("root", "", "localhost","gestionevenements");
+	
+	//========================================================================================================================================
+	//User
+	//========================================================================================================================================
+
 
 	public static ArrayList<User> selectAllUser (String filtre){
 		String requete="";
@@ -70,12 +75,51 @@ public class Modele {
 	}
 
 	
+	public static void insertUser(User unUser) {
+	    String requete = "INSERT INTO user (nom, prenom, courriel, motdepasse, resetMDP, role) VALUES (?, ?, ?, ?, 0, ?)";
+	    try {
+	        uneBDD.seConnecter();
+	        PreparedStatement unStat = (PreparedStatement) uneBDD.getMaConnexion().prepareStatement(requete);
+	        unStat.setString(1, unUser.getNom());
+	        unStat.setString(2, unUser.getPrenom());
+	        unStat.setString(3, unUser.getCourriel());
+	        unStat.setString(4, unUser.getMotdepasse());
+	        // Notez que le resetMDP est fixé à 0 par défaut selon votre requête, donc pas besoin de le spécifier ici
+	        unStat.setString(5, unUser.getRole());
+	        unStat.executeUpdate();
+	        unStat.close();
+	        uneBDD.seDeConnecter();
+	    } catch (SQLException exp) {
+	        System.out.println("Erreur de requete : " + requete);
+	        System.out.println(exp);
+	    }
+	}
+
 	
+	public static void deleteUser(int idUtilisateur) {
+	    String requete = "DELETE FROM user WHERE idUtilisateur = ?";
+	    try {
+	        uneBDD.seConnecter();
+	        PreparedStatement unStat = (PreparedStatement) uneBDD.getMaConnexion().prepareStatement(requete);
+	        unStat.setInt(1, idUtilisateur);
+	        unStat.executeUpdate();
+	        unStat.close();
+	        uneBDD.seDeConnecter();
+	    } catch (SQLException exp) {
+	        System.out.println("Erreur de requete : " + requete);
+	        System.out.println(exp);
+	    }
+	}
+
 	
 	public static void updateUser(User unUser) {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	//========================================================================================================================================
+	//Evenement
+	//========================================================================================================================================
 
 	public static ArrayList<Evenement> selectAllEvenement(String filtre) {
 		String requete = "";
@@ -112,36 +156,60 @@ public class Modele {
 		return lesEvenements;
 	}
 
-	public static Evenement selectWhereEvenement(String nom) {
-		Evenement unEvenement = null;
-		String requete = "SELECT * FROM evenement WHERE nom = '" + nom + "';";
-		try {
-			uneBDD.seConnecter();
-			Statement unStat = uneBDD.getMaConnexion().createStatement();
-			ResultSet desRes = unStat.executeQuery(requete); 
-			if (desRes.next()) {
-				unEvenement = new Evenement (
-						desRes.getInt("idEvenement"), 
-						desRes.getInt("organisateurId"), 
-						desRes.getInt("lieuId"), 
-						desRes.getString("nom"),
-						desRes.getString("description"), desRes.getString("type"),
-						desRes.getString("statut"), desRes.getString("date")
-						);
-			}
-			unStat.close();
-			uneBDD.seDeConnecter();	
-		} catch (SQLException exp) {
-			System.out.println("Erreur de requete : " + requete );
-			System.out.println(exp);
-		}
-		return unEvenement;
+	public static Evenement selectWhereEvenement(String nom, String description, String type, String status, String date) {
+	    Evenement unEvenement = null;
+	    String requete = "SELECT * FROM evenement WHERE nom = ? AND description = ? AND type = ? AND statut = ? AND date = ?";
+	    try {
+	        uneBDD.seConnecter();
+	        PreparedStatement unStat = (PreparedStatement) uneBDD.getMaConnexion().prepareStatement(requete);
+	        unStat.setString(1, nom);
+	        unStat.setString(2, description);
+	        unStat.setString(3, type);
+	        unStat.setString(4, status);
+	        unStat.setString(5, date);
+	        ResultSet desRes = unStat.executeQuery();
+	        if (desRes.next()) {
+	            unEvenement = new Evenement (
+	                    desRes.getInt("idEvenement"), 
+	                    desRes.getInt("organisateurId"), 
+	                    desRes.getInt("lieuId"), 
+	                    nom, // Utilisation de la variable nom
+	                    description, // Utilisation de la variable description
+	                    type, // Utilisation de la variable type
+	                    status, // Utilisation de la variable status
+	                    date // Utilisation de la variable date
+	                    );
+	        }
+	        unStat.close();
+	        uneBDD.seDeConnecter();    
+	    } catch (SQLException exp) {
+	        System.out.println("Erreur de requete : " + requete );
+	        System.out.println(exp);
+	    }
+	    return unEvenement;
 	}
 
 	public static void insertEvenement(Evenement unEvenement) {
-		// TODO Auto-generated method stub
-		
+	    String requete = "INSERT INTO evenement (organisateurId, lieuId, nom, description, type, statut, date) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	    try {
+	        uneBDD.seConnecter();
+	        PreparedStatement unStat = (PreparedStatement) uneBDD.getMaConnexion().prepareStatement(requete);
+	        unStat.setInt(1, unEvenement.getOrganisateurId());
+	        unStat.setInt(2, unEvenement.getLieuId());
+	        unStat.setString(3, unEvenement.getNom());
+	        unStat.setString(4, unEvenement.getDescription());
+	        unStat.setString(5, unEvenement.getType());
+	        unStat.setString(6, unEvenement.getStatut());
+	        unStat.setString(7, unEvenement.getDate());
+	        unStat.executeUpdate();
+	        unStat.close();
+	        uneBDD.seDeConnecter();
+	    } catch (SQLException exp) {
+	        System.out.println("Erreur de requete : " + requete);
+	        System.out.println(exp);
+	    }
 	}
+
 
 	public static void updateEvenement(Evenement unEvenement) {
 		// TODO Auto-generated method stub
@@ -149,8 +217,23 @@ public class Modele {
 	}
 	
 	public static void deleteEvenement(int idEvenement) {
-		
+	    String requete = "DELETE FROM evenement WHERE idEvenement = ?";
+	    try {
+	        uneBDD.seConnecter();
+	        PreparedStatement unStat = (PreparedStatement) uneBDD.getMaConnexion().prepareStatement(requete);
+	        unStat.setInt(1, idEvenement);
+	        unStat.executeUpdate();
+	        unStat.close();
+	        uneBDD.seDeConnecter();
+	    } catch (SQLException exp) {
+	        System.out.println("Erreur de requete : " + requete);
+	        System.out.println(exp);
+	    }
 	}
+	
+	//========================================================================================================================================
+	//Lieu
+	//========================================================================================================================================
 
 	public static ArrayList<Lieu> selectAllLieu(String filtre) {
 	    String requete = ""; 
@@ -247,9 +330,10 @@ public class Modele {
 	}
 	
 	
-	
-	
+	//========================================================================================================================================
 	//SELECT CUSTOM
+	//========================================================================================================================================
+
 	
     public static String selectUserNameById(int idUtilisateur) {
         String nomUtilisateur = null; // Initialisation à null au cas où l'utilisateur n'est pas trouvé

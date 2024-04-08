@@ -21,6 +21,7 @@ import controleur.Controleur;
 import controleur.Lieu;
 import controleur.Tableau;
 
+@SuppressWarnings("serial")
 public class PanelLieu extends PanelPrincipal implements ActionListener{
 	private JTextField txtNom = new  JTextField(); 
 	private JTextField txtAdresse = new  JTextField(); 

@@ -17,17 +17,15 @@ public class Controleur {
 	}
 
 	public static void updateUser(User unUser) {
-		 
 		Modele.updateUser(unUser);
 	}
 	
-	public static void deleteUser(int idclasse) {
-		// TODO Auto-generated method stub
-		
+	public static void deleteUser(int idUser) {
+		Modele.deleteUser(idUser);
 	}
 	
 	public static void insertUser(User unUser) {
-		// TODO Auto-generated method stub
+		Modele.insertUser(unUser);
 		
 	}
 	
@@ -37,8 +35,8 @@ public class Controleur {
 		return Modele.selectAllEvenement(filtre);
 	}
 	
-	public static Evenement selectWhereEvenement(String nom) {
-		return Modele.selectWhereEvenement(nom);
+	public static Evenement selectWhereEvenement(String nom, String description, String type, String status, String date) {
+		return Modele.selectWhereEvenement(nom, description, type, status, date);
 	}
 	
 	public static void insertEvenement(Evenement unEvenement) {
