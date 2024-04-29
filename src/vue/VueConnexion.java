@@ -25,7 +25,7 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener 
 	private JButton btSeConnecter = new JButton("Se Connecter");
 	
 	public VueConnexion() {
-		this.setTitle("Application Admin 0.1.0-alpha.1");
+		this.setTitle("Application Admin 0.1.0-beta.2");
 		this.setResizable(false);
 		this.setBounds(100, 100, 600, 300);
 		this.getContentPane().setBackground(Color.white);
@@ -97,8 +97,7 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener 
 		 
 		 User unUser = Controleur.selectWhereUser(email, mdp); 
 		 if (unUser == null) {
-			 JOptionPane.showMessageDialog(this,
-					 "Veuillez vérifier vos identifiants");
+			 JOptionPane.showMessageDialog(this,"Veuillez vérifier vos identifiants");
 		 }else {
 			 JOptionPane.showMessageDialog(this,
 					 "Bienvenue "+unUser.getNom()

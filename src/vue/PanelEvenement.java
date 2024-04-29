@@ -196,28 +196,32 @@ public class PanelEvenement extends PanelPrincipal implements ActionListener{
 			String organisateur = (String) this.cbxOrganisateur.getSelectedItem();
 			String lieu = (String) this.cbxLieu.getSelectedItem();
 			
-			int organisateurId = Controleur.selectOrganisateurIdByNom(organisateur);
-			int lieuId = Controleur.selectLieuIdByNom(lieu);
-			
-			Evenement unEvenement = new Evenement(organisateurId, lieuId, nom, description, type, status, date);
-			
-			Controleur.insertEvenement(unEvenement);
-			
-			unEvenement = Controleur.selectWhereEvenement(nom, description, type, status, date);
-			
-			Object ligne[] = {unEvenement.getIdEvenement(), nom, date, type, status, organisateur, lieu};
-			 this.unTableau.ajouterLigne(ligne);
-			 this.nb = this.unTableau.getRowCount(); 
-			 this.nbEvenements.setText("Nombre de d'évènements : " + nb);
-			
-			 JOptionPane.showMessageDialog(this, "Insertion réussie du lieu.");
-			this.txtNom.setText("");
-			this.txtDescription.setText("");
-			this.txtDate.setText("");
-			this.cbxLieu.setSelectedIndex(0);
-			this.cbxOrganisateur.setSelectedIndex(0);
-			this.cbxStatus.setSelectedIndex(0);
-			this.cbxType.setSelectedIndex(0);
+			if(nom.isEmpty() || description.isEmpty() || date.isEmpty()) {
+				JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs.");
+			} else {
+				int organisateurId = Controleur.selectOrganisateurIdByNom(organisateur);
+				int lieuId = Controleur.selectLieuIdByNom(lieu);
+				
+				Evenement unEvenement = new Evenement(organisateurId, lieuId, nom, description, type, status, date);
+				
+				Controleur.insertEvenement(unEvenement);
+				
+				unEvenement = Controleur.selectWhereEvenement(nom, description, type, status, date);
+				
+				Object ligne[] = {unEvenement.getIdEvenement(), nom, date, type, status, organisateur, lieu};
+				this.unTableau.ajouterLigne(ligne);
+				this.nb = this.unTableau.getRowCount(); 
+				this.nbEvenements.setText("Nombre de d'évènements : " + nb);
+				
+				JOptionPane.showMessageDialog(this, "Insertion réussie du lieu.");
+				this.txtNom.setText("");
+				this.txtDescription.setText("");
+				this.txtDate.setText("");
+				this.cbxLieu.setSelectedIndex(0);
+				this.cbxOrganisateur.setSelectedIndex(0);
+				this.cbxStatus.setSelectedIndex(0);
+				this.cbxType.setSelectedIndex(0);
+			}
 		} else if(e.getSource() == this.btFiltrer) {
 			 String filtre = this.txtFiltre.getText(); 
 			 
