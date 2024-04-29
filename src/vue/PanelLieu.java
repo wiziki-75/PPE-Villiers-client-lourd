@@ -164,26 +164,32 @@ public class PanelLieu extends PanelPrincipal implements ActionListener{
 			 String capacite = this.txtCapacite.getText(); 
 			 String disponibilite = (String) this.cbxDispo.getSelectedItem();
 			 
-			 //instancier une classe 
-			 Lieu unLieu = new Lieu (nom, adresse, capacite, disponibilite);
-			 
-			 //insertion dans la classe dans la base de données 
-			 Controleur.insertLieu (unLieu); 
-			 
-			 //recuperation de l'id de la classe inseree auprès de Mysql 
-			 unLieu = Controleur.selectWhereLieu(nom, adresse, capacite, disponibilite); 
-			 
-			 //actualiser l'affichage dans le tableau 
-			 Object ligne[]= {unLieu.getIdLieu(), nom, adresse, capacite, disponibilite};
-			 this.unTableau.ajouterLigne(ligne);
-			 this.nb = this.unTableau.getRowCount(); 
-			 this.nbLieux.setText("Nombre de lieux : " + nb);
-			 
-			 JOptionPane.showMessageDialog(this, "Insertion réussie du lieu.");
-			 this.txtNom.setText("");
-			 this.txtAdresse.setText("");
-			 this.txtCapacite.setText("");
-			 this.cbxDispo.setSelectedIndex(0);
+			 if(nom.isEmpty() || adresse.isEmpty()) {
+				 JOptionPane.showMessageDialog(this, "Vérifiez que le nom et adresse soient bien remplis.");
+			 } else if(capacite.isEmpty()) {
+				 JOptionPane.showMessageDialog(this, "Saisissez, la capacite.");
+			 } else {
+				 //instancier une classe 
+				 Lieu unLieu = new Lieu (nom, adresse, capacite, disponibilite);
+				 
+				 //insertion dans la classe dans la base de données 
+				 Controleur.insertLieu (unLieu); 
+				 
+				 //recuperation de l'id de la classe inseree auprès de Mysql 
+				 unLieu = Controleur.selectWhereLieu(nom, adresse, capacite, disponibilite); 
+				 
+				 //actualiser l'affichage dans le tableau 
+				 Object ligne[]= {unLieu.getIdLieu(), nom, adresse, capacite, disponibilite};
+				 this.unTableau.ajouterLigne(ligne);
+				 this.nb = this.unTableau.getRowCount(); 
+				 this.nbLieux.setText("Nombre de lieux : " + nb);
+				 
+				 JOptionPane.showMessageDialog(this, "Insertion réussie du lieu.");
+				 this.txtNom.setText("");
+				 this.txtAdresse.setText("");
+				 this.txtCapacite.setText("");
+				 this.cbxDispo.setSelectedIndex(0);
+			 }
 		 }
 		 else if (e.getSource() == this.btFiltrer) {
 			 String filtre = this.txtFiltre.getText(); 

@@ -149,23 +149,27 @@ public class PanelUser extends PanelPrincipal implements ActionListener{
 			String motdepasse = this.txtMotdepasse.getText();
 			String role = (String) this.cbxRole.getSelectedItem();
 			
-			User unUser = new User(nom, prenom, courriel, motdepasse, role);
-			
-			Controleur.insertUser(unUser);
-			
-			unUser = Controleur.selectWhereUser(courriel, motdepasse);
-			
-			Object ligne[] = {unUser.getIdUtilisateur(), nom, prenom, courriel, role};
-			 this.unTableau.ajouterLigne(ligne);
-			 this.nb = this.unTableau.getRowCount(); 
-			 this.nbUser.setText("Nombre de d'évènements : " + nb);
-			
-			 JOptionPane.showMessageDialog(this, "Insertion réussie de l'utilisateur.");
-			this.txtNom.setText("");
-			this.txtPrenom.setText("");
-			this.txtCourriel.setText("");
-			this.txtMotdepasse.setText("");
-			this.cbxRole.setSelectedIndex(0);
+			if(nom.isEmpty() || prenom.isEmpty() || courriel.isEmpty() || motdepasse.isEmpty()) {
+				JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs.");
+			} else {
+				User unUser = new User(nom, prenom, courriel, motdepasse, role);
+				
+				Controleur.insertUser(unUser);
+				
+				unUser = Controleur.selectWhereUser(courriel, motdepasse);
+				
+				Object ligne[] = {unUser.getIdUtilisateur(), nom, prenom, courriel, role};
+				this.unTableau.ajouterLigne(ligne);
+				this.nb = this.unTableau.getRowCount(); 
+				this.nbUser.setText("Nombre de d'évènements : " + nb);
+				
+				JOptionPane.showMessageDialog(this, "Insertion réussie de l'utilisateur.");
+				this.txtNom.setText("");
+				this.txtPrenom.setText("");
+				this.txtCourriel.setText("");
+				this.txtMotdepasse.setText("");
+				this.cbxRole.setSelectedIndex(0);
+			}
 		} else if(e.getSource() == this.btFiltrer) {
 			 String filtre = this.txtFiltre.getText(); 
 			 
