@@ -25,7 +25,7 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener 
 	private JButton btSeConnecter = new JButton("Se Connecter");
 	
 	public VueConnexion() {
-		this.setTitle("Application Admin 0.1.0-beta.2");
+		this.setTitle("Application Admin 1.0.0");
 		this.setResizable(false);
 		this.setBounds(100, 100, 600, 300);
 		this.getContentPane().setBackground(Color.white);
@@ -98,10 +98,11 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener 
 		 User unUser = Controleur.selectWhereUser(email, mdp); 
 		 if (unUser == null) {
 			 JOptionPane.showMessageDialog(this,"Veuillez vérifier vos identifiants");
-		 }else {
+		 } else if(!unUser.getRole().equals("organisateur")) {
+			 JOptionPane.showMessageDialog(this,"Vous devez être organisateur.");
+		 } else {
 			 JOptionPane.showMessageDialog(this,
-					 "Bienvenue "+unUser.getNom()
-					 +"  "+unUser.getPrenom()); 
+					 "Bienvenue "+unUser.getNom()+"  "+unUser.getPrenom()); 
 			 //on ouvre la vue générale 
 			 Villiers.rendreVisibleVueConnexion(false);
 			 Villiers.rendreVisibleVueGenerale(true, unUser);

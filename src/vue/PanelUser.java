@@ -102,12 +102,28 @@ public class PanelUser extends PanelPrincipal implements ActionListener{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int numLigne, idUser ; 
-				if (e.getClickCount() >=2 ) {
-					numLigne = tableUsers.getSelectedRow(); 
-					idUser = Integer.parseInt(unTableau.getValueAt(numLigne, 0).toString()); 
-					Controleur.deleteUser(idUser);
-					unTableau.supprimerLigne(numLigne);
+
+				if (e.getClickCount() >= 2) {
+				    numLigne = tableUsers.getSelectedRow();
+				    idUser = Integer.parseInt(unTableau.getValueAt(numLigne, 0).toString());
+				    String nomUtilisateur = unTableau.getValueAt(numLigne, 3).toString();
+				    
+				    int response = JOptionPane.showConfirmDialog(null, 
+				        "Êtes-vous sûr de vouloir supprimer l'utilisateur " + nomUtilisateur + " ?", 
+				        "Confirmation de suppression", 
+				        JOptionPane.YES_NO_OPTION, 
+				        JOptionPane.QUESTION_MESSAGE);
+				    
+				    if (response == JOptionPane.YES_OPTION) {
+				        try {
+					        Controleur.deleteUser(idUser);
+					        unTableau.supprimerLigne(numLigne);
+				        } catch (Exception ex) {
+							JOptionPane.showMessageDialog(null, "Une erreur s'est produite : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+						}
+				    }
 				}
+
 			}
 		});
 		

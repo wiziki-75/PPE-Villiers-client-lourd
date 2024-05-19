@@ -139,13 +139,27 @@ public class PanelEvenement extends PanelPrincipal implements ActionListener{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int numLigne, idEvenement ; 
+				
 				if (e.getClickCount() >=2 ) {
 					numLigne = tableEvenements.getSelectedRow(); 
 					idEvenement = Integer.parseInt(unTableau.getValueAt(numLigne, 0).toString()); 
-					//supprimer dans la base 
-					Controleur.deleteEvenement(idEvenement);
-					//actualiser l'affichage 
-					unTableau.supprimerLigne(numLigne);
+					String nomEvent = unTableau.getValueAt(numLigne, 1).toString();
+					
+				    int response = JOptionPane.showConfirmDialog(null, 
+				    		"Êtes-vous sûr de vouloir supprimer l'évènement " + nomEvent + " ?", 
+					        "Confirmation de suppression", 
+					        JOptionPane.YES_NO_OPTION, 
+					        JOptionPane.QUESTION_MESSAGE);
+					    
+					if (response == JOptionPane.YES_OPTION) {
+						try {
+							Controleur.deleteEvenement(idEvenement);
+							unTableau.supprimerLigne(numLigne);
+						} catch (Exception ex) {
+							JOptionPane.showMessageDialog(null, "Une erreur s'est produite : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+						} 
+						
+				    }
 				}
 			}
 		});

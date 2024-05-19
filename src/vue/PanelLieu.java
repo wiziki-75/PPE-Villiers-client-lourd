@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -115,11 +116,26 @@ public class PanelLieu extends PanelPrincipal implements ActionListener{
 				int numLigne, idLieu ; 
 				if (e.getClickCount() >=2 ) {
 					numLigne = tableLieux.getSelectedRow(); 
-					idLieu = Integer.parseInt(unTableau.getValueAt(numLigne, 0).toString()); 
-					//supprimer dans la base 
-					Controleur.deleteLieu(idLieu);
-					//actualiser l'affichage 
-					unTableau.supprimerLigne(numLigne);
+					idLieu = Integer.parseInt(unTableau.getValueAt(numLigne, 0).toString());  
+					String nomLieu = unTableau.getValueAt(numLigne, 1).toString();
+					
+					int response = JOptionPane.showConfirmDialog(null, 
+						"Êtes-vous sûr de vouloir supprimer le lieu " + nomLieu + " ?",
+						"Confirmation de suppression",
+						JOptionPane.YES_NO_OPTION, 
+				        JOptionPane.QUESTION_MESSAGE);
+					if(response == JOptionPane.YES_OPTION) {
+						try {
+							Controleur.deleteLieu(idLieu);
+							unTableau.supprimerLigne(numLigne);
+						} catch (SQLException ex) {
+			                System.err.println("Erreur SQL capturée: " + ex.getMessage());
+			                JOptionPane.showMessageDialog(null, "Vous ne pouvez pas supprimer ce lieu car il est sûrement attribuer à un évènement.");
+			            } catch (Exception ex) {
+			                System.err.println("Erreur générale capturée: " + ex.getMessage());
+			                JOptionPane.showMessageDialog(null, "Une erreur s'est produite : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+			            }
+					}
 				}
 			}
 		});
