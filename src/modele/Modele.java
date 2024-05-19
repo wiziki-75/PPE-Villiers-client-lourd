@@ -315,7 +315,7 @@ public class Modele {
 		
 	}
 	
-	public static void deleteLieu(int idLieu) {
+	public static void deleteLieu(int idLieu) throws SQLException {
 		String requete = "DELETE FROM lieu WHERE idLieu = " + idLieu + ";";
 		try {
 			uneBDD.seConnecter();
@@ -323,9 +323,9 @@ public class Modele {
 			unStat.execute(requete);
 			unStat.close();
 			uneBDD.seDeConnecter();	
-		} catch (SQLException exp)
-			{
+		} catch (SQLException exp){
 				System.out.println("Erreur de requete : " + requete );
+				throw new SQLException("Vous ne pouvez pas supprimer ce lieu car il est sûrement attribué à un évènement.", exp);
 			}
 	}
 	

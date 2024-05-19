@@ -28,7 +28,7 @@ public class VueGenerale extends JFrame implements ActionListener{
 	public VueGenerale(User unUser) {
 		unPanelProfil = new PanelProfil(unUser);
 		
-		this.setTitle("Application admin 0.1.0-beta.2");
+		this.setTitle("Application Admin 1.0.0");
 		this.setResizable(false);
 		this.setBounds(100, 100, 900, 600);
 		this.getContentPane().setBackground(Color.white);

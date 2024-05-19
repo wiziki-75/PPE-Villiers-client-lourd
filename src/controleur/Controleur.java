@@ -1,5 +1,6 @@
 package controleur;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import modele.Modele;
@@ -69,7 +70,7 @@ public class Controleur {
 		Modele.updateLieu(unLieu);
 	}
 	
-	public static void deleteLieu(int idLieu) {
+	public static void deleteLieu(int idLieu) throws SQLException {
 		Modele.deleteLieu(idLieu);
 	}
 	
