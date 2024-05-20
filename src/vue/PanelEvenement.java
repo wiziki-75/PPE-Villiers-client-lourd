@@ -76,7 +76,7 @@ public class PanelEvenement extends PanelPrincipal implements ActionListener{
 		this.panelForm.add(this.txtNom); 
 		this.panelForm.add(new JLabel("Description :")); 
 		this.panelForm.add(this.txtDescription); 
-		this.panelForm.add(new JLabel("Date :")); 
+		this.panelForm.add(new JLabel("Date : (Y-M-D H:M:S)")); 
 		this.panelForm.add(this.txtDate); 
 		this.panelForm.add(new JLabel("Type :")); 
 		this.panelForm.add(this.cbxType);

@@ -96,7 +96,7 @@ public class Modele {
 	}
 
 	
-	public static void deleteUser(int idUtilisateur) {
+	public static void deleteUser(int idUtilisateur) throws SQLException {
 	    String requete = "DELETE FROM user WHERE idUtilisateur = ?";
 	    try {
 	        uneBDD.seConnecter();
@@ -107,7 +107,7 @@ public class Modele {
 	        uneBDD.seDeConnecter();
 	    } catch (SQLException exp) {
 	        System.out.println("Erreur de requete : " + requete);
-	        System.out.println(exp);
+	        throw new SQLException("Vous ne pouvez pas cette utilisateur car il est sûrement attribué à un évènement.", exp);
 	    }
 	}
 
