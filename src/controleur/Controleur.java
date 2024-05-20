@@ -21,7 +21,7 @@ public class Controleur {
 		Modele.updateUser(unUser);
 	}
 	
-	public static void deleteUser(int idUser) {
+	public static void deleteUser(int idUser) throws SQLException {
 		Modele.deleteUser(idUser);
 	}
 	

@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -118,9 +119,13 @@ public class PanelUser extends PanelPrincipal implements ActionListener{
 				        try {
 					        Controleur.deleteUser(idUser);
 					        unTableau.supprimerLigne(numLigne);
-				        } catch (Exception ex) {
-							JOptionPane.showMessageDialog(null, "Une erreur s'est produite : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-						}
+				        } catch (SQLException ex) {
+			                System.err.println("Erreur SQL capturée: " + ex.getMessage());
+			                JOptionPane.showMessageDialog(null, "Vous ne pouvez pas supprimer cette utilisateur car il est sûrement attribué à un évènement.");
+			            } catch (Exception ex) {
+			                System.err.println("Erreur générale capturée: " + ex.getMessage());
+			                JOptionPane.showMessageDialog(null, "Une erreur s'est produite : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+			            }
 				    }
 				}
 
