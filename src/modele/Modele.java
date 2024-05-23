@@ -12,7 +12,7 @@ import controleur.Lieu;
 import controleur.User;
 
 public class Modele {
-	private static BDD uneBDD = new BDD("root", "", "localhost","gestionevenements");
+	private static BDD uneBDD = new BDD("anthony", "anthony", "172.20.111.127:3306","gestionevenements");
 	
 	//========================================================================================================================================
 	//User
@@ -22,9 +22,9 @@ public class Modele {
 	public static ArrayList<User> selectAllUser (String filtre){
 		String requete="";
 		if(filtre.equals("")) {
-			requete = "SELECT * FROM User;";
+			requete = "SELECT * FROM user;";
 		} else {
-			requete = "SELECT * FROM User WHERE nom LIKE '%"
+			requete = "SELECT * FROM user WHERE nom LIKE '%"
 					+ filtre + "%' OR prenom LIKE '%" + filtre
 					+ "%' OR courriel = '%" + filtre + "%';";
 		}
@@ -53,7 +53,7 @@ public class Modele {
 	
 	public static User selectWhereUser(String courriel, String Motdepasse) {
 		User unUser = null;
-		String requete = "SELECT * FROM User WHERE courriel='" + courriel + "' AND  motdepasse='" + Motdepasse + "';";
+		String requete = "SELECT * FROM user WHERE courriel='" + courriel + "' AND  motdepasse='" + Motdepasse + "';";
 		try {
 			uneBDD.seConnecter();
 			Statement unStat = uneBDD.getMaConnexion().createStatement();
@@ -381,7 +381,7 @@ public class Modele {
     
     public static ArrayList<String> selectOrganisateurs() {
         ArrayList<String> organisateurs = new ArrayList<>();
-        String requete = "SELECT nom FROM User WHERE role = 'organisateur';";
+        String requete = "SELECT nom FROM user WHERE role = 'organisateur';";
         try {
             uneBDD.seConnecter();
             PreparedStatement unPStat = (PreparedStatement) uneBDD.getMaConnexion().prepareStatement(requete);
@@ -400,7 +400,7 @@ public class Modele {
     
     public static ArrayList<String> selectLieuxDispo() {
         ArrayList<String> lieux = new ArrayList<>();
-        String requete = "SELECT nom FROM Lieu WHERE disponibilite = 'disponible';";
+        String requete = "SELECT nom FROM lieu WHERE disponibilite = 'disponible';";
         try {
             uneBDD.seConnecter();
             PreparedStatement unPStat = (PreparedStatement) uneBDD.getMaConnexion().prepareStatement(requete);
